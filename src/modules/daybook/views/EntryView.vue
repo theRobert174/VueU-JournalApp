@@ -15,7 +15,7 @@
     <div class="d-flex flex-column px-3 h-75">
         <textarea placeholder="Que sucedió hoy?"></textarea>
     </div>
-    <Fab/>
+    <Fab :icon="'fa-floppy-disk'"/>
     <img src="https://marketplace.canva.com/EAFJyZcPQnE/1/0/1600w/canva-dark-blue-illustration-desktop-wallpaper-wDeXRc8LWg4.jpg" alt="entry-picture"
          class="img-thumbnail">
 </template>
