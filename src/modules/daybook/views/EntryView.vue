@@ -1,23 +1,25 @@
 <template>
-    <div class="entry-title d-flex justify-content-between p-2">
-        <div>
-            <span class="text-success fs-3 fw-bold">{{ day }}</span>
-            <span class="mx-1 fs-3">{{month}}</span>
-            <span class="mx-2 fs-4 fw-light">{{yearDay}}</span>
+    <template v-if="entry">
+        <div class="entry-title d-flex justify-content-between p-2">
+            <div>
+                <span class="text-success fs-3 fw-bold">{{ day }}</span>
+                <span class="mx-1 fs-3">{{month}}</span>
+                <span class="mx-2 fs-4 fw-light">{{yearDay}}</span>
+            </div>
+    
+            <div>
+                <button class="btn btn-danger mx-2">Borrar <i class="fa fa-trash-alt"></i></button>
+                <button class="btn btn-primary">Subir foto <i class="fa fa-upload"></i></button>
+            </div>
         </div>
-
-        <div>
-            <button class="btn btn-danger mx-2">Borrar <i class="fa fa-trash-alt"></i></button>
-            <button class="btn btn-primary">Subir foto <i class="fa fa-upload"></i></button>
+        <hr>
+        <div class="d-flex flex-column px-3 h-75">
+            <textarea placeholder="Que sucedió hoy?" v-model="entry.text"></textarea>
         </div>
-    </div>
-    <hr>
-    <div class="d-flex flex-column px-3 h-75">
-        <textarea placeholder="Que sucedió hoy?" v-model="entry.text"></textarea>
-    </div>
+        <img src="https://marketplace.canva.com/EAFJyZcPQnE/1/0/1600w/canva-dark-blue-illustration-desktop-wallpaper-wDeXRc8LWg4.jpg" alt="entry-picture"
+             class="img-thumbnail">
+    </template>
     <Fab :icon="'fa-floppy-disk'"/>
-    <img src="https://marketplace.canva.com/EAFJyZcPQnE/1/0/1600w/canva-dark-blue-illustration-desktop-wallpaper-wDeXRc8LWg4.jpg" alt="entry-picture"
-         class="img-thumbnail">
 </template>
 
 <script>
@@ -43,8 +45,8 @@ export default {
     methods:{
         loadEntry(){
             const entry = this.getEntryById(this.id)
-            console.log(entry)
-            if(!entry) this.$router.push({name: 'no-entry'})
+            //console.log(entry)
+            if(!entry) return this.$router.push({name: 'no-entry'})
             this.entry = entry
         }
     },
@@ -65,6 +67,11 @@ export default {
     },
     created(){
         this.loadEntry()
+    },
+    watch: {
+        id(){
+            this.loadEntry()
+        }
     }
 }
 </script>
