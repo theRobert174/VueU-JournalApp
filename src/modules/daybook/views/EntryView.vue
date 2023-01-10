@@ -22,10 +22,29 @@
 
 <script>
 import { defineAsyncComponent } from 'vue';
+import { mapGetters } from "vuex";
 
 export default {
+    props:{
+        id: {
+            type: String,
+            required: true
+        }
+    },
     components: {
         Fab: defineAsyncComponent( () => import('@/modules/daybook/components/FabComponent.vue'))
+    },
+    methods:{
+        loadEntry(){
+            const entry = this.getEntryById(this.id)
+            console.log(entry)
+        }
+    },
+    computed:{
+        ...mapGetters('journal',['getEntryById']),
+    },
+    created(){
+        this.loadEntry()
     }
 }
 </script>
