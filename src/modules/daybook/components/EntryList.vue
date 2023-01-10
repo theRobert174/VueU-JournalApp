@@ -4,7 +4,7 @@
             <input type="text" name="" id="" class="form-control" placeholder="Buscar Entrada" v-model="term">
         </div>
         <div class="entry-scrollarea">
-            <Entry v-for="item in entriesByTerm" :key="item"/>
+            <Entry v-for="entry in entriesByTerm" :key="entry.id" :entry="entry"/>
         </div>
     </div>
 </template>
