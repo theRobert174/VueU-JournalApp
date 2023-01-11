@@ -19,7 +19,7 @@
         <img src="https://marketplace.canva.com/EAFJyZcPQnE/1/0/1600w/canva-dark-blue-illustration-desktop-wallpaper-wDeXRc8LWg4.jpg" alt="entry-picture"
              class="img-thumbnail">
     </template>
-    <Fab :icon="'fa-floppy-disk'"/>
+    <Fab :icon="'fa-floppy-disk'" @on:click="saveEntry"/>
 </template>
 
 <script>
@@ -48,6 +48,9 @@ export default {
             //console.log(entry)
             if(!entry) return this.$router.push({name: 'no-entry'})
             this.entry = entry
+        },
+        async saveEntry(){
+            console.log('Guardado ala entry')
         }
     },
     computed:{
