@@ -45,14 +45,28 @@ export default {
     methods:{
         ...mapActions('journal',['updateEntry']),
         loadEntry(){
-            const entry = this.getEntryById(this.id)
+            let entry
+
+            if(this.id === 'new'){
+                entry = {
+                    text: '',
+                    date: new Date().getTime()
+                }
+            } else {
+                entry = this.getEntryById(this.id)
+                if(!entry) return this.$router.push({name: 'no-entry'})
+            }
+
             //console.log(entry)
-            if(!entry) return this.$router.push({name: 'no-entry'})
             this.entry = entry
         },
         async saveEntry(){
-            console.log('Guardado ala entry', this.entry)
-            this.updateEntry(this.entry)
+            if(this.entry.id){
+                console.log('Guardado ala entry', this.entry)
+                this.updateEntry(this.entry)
+            } else {
+                console.log('Post')
+            }
         }
     },
     computed:{
