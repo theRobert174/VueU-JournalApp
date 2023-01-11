@@ -24,7 +24,7 @@
 
 <script>
 import { defineAsyncComponent } from 'vue';
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 import getDayMonthYear from '../helpers/getDayMonthYear'
 
 export default {
@@ -43,6 +43,7 @@ export default {
         }
     },
     methods:{
+        ...mapActions('journal',['updateEntry']),
         loadEntry(){
             const entry = this.getEntryById(this.id)
             //console.log(entry)
@@ -50,7 +51,8 @@ export default {
             this.entry = entry
         },
         async saveEntry(){
-            console.log('Guardado ala entry')
+            console.log('Guardado ala entry', this.entry)
+            this.updateEntry(this.entry)
         }
     },
     computed:{
