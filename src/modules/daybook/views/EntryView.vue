@@ -43,7 +43,7 @@ export default {
         }
     },
     methods:{
-        ...mapActions('journal',['updateEntry']),
+        ...mapActions('journal',['updateEntry','createEntry']),
         loadEntry(){
             let entry
 
@@ -61,11 +61,14 @@ export default {
             this.entry = entry
         },
         async saveEntry(){
+            //update Entry
             if(this.entry.id){
                 console.log('Guardado ala entry', this.entry)
                 this.updateEntry(this.entry)
-            } else {
-                console.log('Post')
+            } else {//create Entry
+                //action
+                const resp = await this.createEntry(this.entry)
+                if(resp) return this.$router.push( {name: 'entry', params: {id: resp}} )
             }
         }
     },

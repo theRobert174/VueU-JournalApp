@@ -12,6 +12,7 @@ export const updateEntry = (state, entry) => {
     //console.log(idx)
     state.entries[idx] = entry
 }
-export const addEntries = (/*state*/) => {
-
+export const addEntry = (state, entry) => {
+    console.log(entry)
+    state.entries = [entry, ...state.entries]
 }
