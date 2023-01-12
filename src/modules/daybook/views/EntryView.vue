@@ -26,6 +26,7 @@
 import { defineAsyncComponent } from 'vue';
 import { mapGetters, mapActions } from "vuex";
 import getDayMonthYear from '../helpers/getDayMonthYear'
+import Swal from 'sweetalert2'
 
 export default {
     props:{
@@ -61,6 +62,13 @@ export default {
             this.entry = entry
         },
         async saveEntry(){
+
+            new Swal({
+                title: 'Espere por favor',
+                allowOutsideClick: false
+            })
+            Swal.showLoading()
+
             //update Entry
             if(this.entry.id){
                 console.log('Guardado ala entry', this.entry)
@@ -68,12 +76,29 @@ export default {
             } else {//create Entry
                 //action
                 const resp = await this.createEntry(this.entry)
-                if(resp) return this.$router.push( {name: 'entry', params: {id: resp}} )
+                if(resp) this.$router.push( {name: 'entry', params: {id: resp}} )
             }
+            Swal.fire('Guardado','Entrada Registrada','success')
         },
         async onDeleteEntry(){
-            const resp = await this.deleteEntry(this.entry.id)
-            if(resp) return this.$router.push( {name: 'entry', params: {id: 'new'}} )
+
+            const {isConfirmed} = await Swal.fire({
+                title: 'Estas seguro?',
+                text: 'Una vez borrado, no se puede recuperar',
+                showDenyButton: true,
+                confirmButtonText: 'Si, estoy seguro'
+            })
+            
+            if(isConfirmed){
+                new Swal({
+                    title:'Espere por favor',
+                    allowOutsideClick: false
+                })
+                Swal.showLoading()
+                const resp = await this.deleteEntry(this.entry.id)
+                if(resp) this.$router.push( {name: 'entry', params: {id: 'new'}} )
+                Swal.fire('Eliminado','','success')
+            }
         }
     },
     computed:{
