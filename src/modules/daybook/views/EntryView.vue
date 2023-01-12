@@ -8,7 +8,7 @@
             </div>
     
             <div>
-                <button class="btn btn-danger mx-2">Borrar <i class="fa fa-trash-alt"></i></button>
+                <button v-if="entry.id" class="btn btn-danger mx-2" @click="onDeleteEntry">Borrar <i class="fa fa-trash-alt"></i></button>
                 <button class="btn btn-primary">Subir foto <i class="fa fa-upload"></i></button>
             </div>
         </div>
@@ -43,7 +43,7 @@ export default {
         }
     },
     methods:{
-        ...mapActions('journal',['updateEntry','createEntry']),
+        ...mapActions('journal',['updateEntry','createEntry','deleteEntry']),
         loadEntry(){
             let entry
 
@@ -70,6 +70,10 @@ export default {
                 const resp = await this.createEntry(this.entry)
                 if(resp) return this.$router.push( {name: 'entry', params: {id: resp}} )
             }
+        },
+        async onDeleteEntry(){
+            const resp = await this.deleteEntry(this.entry.id)
+            if(resp) return this.$router.push( {name: 'entry', params: {id: 'new'}} )
         }
     },
     computed:{
