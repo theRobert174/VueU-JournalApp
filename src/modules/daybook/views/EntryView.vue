@@ -17,8 +17,8 @@
         <div class="d-flex flex-column px-3 h-75">
             <textarea placeholder="Que sucedió hoy?" v-model="entry.text"></textarea>
         </div>
-        <img v-if="localImage" :src="localImage" alt="entry-picture"
-             class="img-thumbnail">
+        <img v-if="entry.picture && !localImage" :src="entry.picture" alt="entry-picture" class="img-thumbnail">
+        <img v-if="localImage" :src="localImage" alt="entry-picture" class="img-thumbnail">
     </template>
     <Fab :icon="'fa-floppy-disk'" @on:click="saveEntry"/>
 </template>
@@ -28,6 +28,7 @@ import { defineAsyncComponent } from 'vue';
 import { mapGetters, mapActions } from "vuex";
 import getDayMonthYear from '../helpers/getDayMonthYear'
 import Swal from 'sweetalert2'
+import uploadImage from '../helpers/uploadImage'
 
 export default {
     props:{
@@ -72,6 +73,9 @@ export default {
             })
             Swal.showLoading()
 
+            const picture = await uploadImage(this.file)
+            console.log(picture)
+            this.entry.picture = picture
             //update Entry
             if(this.entry.id){
                 console.log('Guardado ala entry', this.entry)
@@ -81,6 +85,7 @@ export default {
                 const resp = await this.createEntry(this.entry)
                 if(resp) this.$router.push( {name: 'entry', params: {id: resp}} )
             }
+            this.file = null
             Swal.fire('Guardado','Entrada Registrada','success')
         },
         async onDeleteEntry(){
