@@ -31,6 +31,7 @@ import Swal from 'sweetalert2'
 import uploadImage from '../helpers/uploadImage'
 
 export default {
+    name: 'EntryView',
     props:{
         id: {
             type: String,

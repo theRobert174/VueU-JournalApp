@@ -1,7 +1,7 @@
 import axios from "axios"
 
 const uploadImage = async (file) => {
-    console.log(file)
+    
     if(!file) return
 
     try {
@@ -11,7 +11,7 @@ const uploadImage = async (file) => {
 
         const url = 'https://api.cloudinary.com/v1_1/docvea5nn/image/upload'
         const {data} = await axios.post(url, formData)
-        console.log(data)
+        
         return data.secure_url
 
     } catch(err){
