@@ -27,7 +27,10 @@ describe('Pruebas en el uploadImage', () => {
         const imageId = segments[segments.length - 1].replace('.jpg','')
         
         const resp = await cloudinary.v2.api.delete_resources(imageId)
-        //console.log(resp.deleted[imageId]);//id del objeto borrado
+
+        // console.log(imageId)
+        // console.log(Object.keys(resp.deleted)[0])//id del objeto borrado
+        // console.log(imageId === Object.keys(resp.deleted)[0]);
         expect(resp.deleted).toEqual(expect.objectContaining({
             [imageId]: 'deleted'
         }))
